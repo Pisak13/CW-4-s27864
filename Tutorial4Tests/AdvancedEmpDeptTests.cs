@@ -9,7 +9,7 @@ public class AdvancedEmpDeptTests
     {
         var emps = Database.GetEmps();
 
-        decimal? maxSalary = emps.Max(e=>e.Sal); 
+        decimal? maxSalary = emps.Max(e => e.Sal);
 
         Assert.Equal(5000, maxSalary);
     }
@@ -21,7 +21,7 @@ public class AdvancedEmpDeptTests
     {
         var emps = Database.GetEmps();
 
-        decimal? minSalary = emps.Where(e=>e.DeptNo==30).Min(e=>e.Sal);
+        decimal? minSalary = emps.Where(e => e.DeptNo == 30).Min(e => e.Sal);
 
         Assert.Equal(1250, minSalary);
     }
@@ -71,9 +71,9 @@ public class AdvancedEmpDeptTests
     {
         var emps = Database.GetEmps();
 
-        // var result = null; 
-        //
-        // Assert.True(result);
+        var result = emps.Where(e => e.Sal > 500);
+
+        Assert.True(result.All(e => e.Sal > 500));
     }
 
     // 17. Any employee with commission over 400
@@ -83,9 +83,10 @@ public class AdvancedEmpDeptTests
     {
         var emps = Database.GetEmps();
 
-        // var result = null; 
-        //
-        // Assert.True(result);
+        var result = emps.Where(e => e.Comm > 400);
+
+        Assert.True(result.All(e => e.Comm > 400));
+        
     }
 
     // 18. Self-join to get employee-manager pairs
