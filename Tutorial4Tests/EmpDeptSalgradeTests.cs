@@ -1,4 +1,5 @@
-﻿using Tutorial3.Models;
+﻿using System.ComponentModel.Design;
+using Tutorial3.Models;
 
 public class EmpDeptSalgradeTests
 {
@@ -9,7 +10,7 @@ public class EmpDeptSalgradeTests
     {
         var emps = Database.GetEmps();
 
-        List<Emp> result = null; 
+        List<Emp> result = emps.Where(p=>p.Job=="SALESMAN").ToList(); 
 
         Assert.Equal(2, result.Count);
         Assert.All(result, e => Assert.Equal("SALESMAN", e.Job));
@@ -22,7 +23,7 @@ public class EmpDeptSalgradeTests
     {
         var emps = Database.GetEmps();
 
-        List<Emp> result = null; 
+        List<Emp> result =emps.Where(p=>p.DeptNo==30).OrderByDescending(p=>p.Sal).ToList(); 
 
         Assert.Equal(2, result.Count);
         Assert.True(result[0].Sal >= result[1].Sal);
@@ -36,10 +37,16 @@ public class EmpDeptSalgradeTests
         var emps = Database.GetEmps();
         var depts = Database.GetDepts();
 
-        List<Emp> result = null; 
+        List<Emp> result = emps
+            .Where(e => depts
+                .Where(d => d.Loc == "CHICAGO")
+                .Select(d => d.DeptNo)
+                .Contains(e.DeptNo))
+            .ToList();
 
         Assert.All(result, e => Assert.Equal(30, e.DeptNo));
     }
+
 
     // 4. SELECT projection
     // SQL: SELECT EName, Sal FROM Emp;
@@ -48,7 +55,7 @@ public class EmpDeptSalgradeTests
     {
         var emps = Database.GetEmps();
 
-        //var result = null; 
+        var result = emps.Select(p=>p.EName); 
         
         // Assert.All(result, r =>
         // {

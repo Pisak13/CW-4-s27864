@@ -1,3 +1,5 @@
+using Tutorial3.Models;
+
 namespace Tutorial3Tests;
 
 public class AdvancedEmpDeptTests
@@ -8,8 +10,8 @@ public class AdvancedEmpDeptTests
     public void ShouldReturnMaxSalary()
     {
         var emps = Database.GetEmps();
-
-        decimal? maxSalary = null; 
+        
+        decimal? maxSalary = emps.Max(p=>p.Sal); 
 
         Assert.Equal(5000, maxSalary);
     }
@@ -21,7 +23,7 @@ public class AdvancedEmpDeptTests
     {
         var emps = Database.GetEmps();
 
-        decimal? minSalary = null;
+        decimal? minSalary = emps.Min(p => p.Sal);
 
         Assert.Equal(1250, minSalary);
     }
